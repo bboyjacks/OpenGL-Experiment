@@ -66,13 +66,13 @@ int main( void )
     
     static const GLfloat g_vertex_buffer_data[] = {
         -1.0f, -1.0f, 0.0f,
-        0.0f, 0.0f, 1.0f,
+        0.0f, 0.19f, 0.30f,
         -1.0f, 1.0f, 0.0f,
-        0.0f, 0.0f, 1.0f,
+        0.33f, 0.38f, 0.42f,
         1.0f, 1.0f, 0.0f,
-        1.0f, 0.0f, 0.0f,
+        0.33f, 0.38f, 0.42f,
         1.0f, -1.0f, 0.0f,
-        1.0f, 0.0f, 0.0f,
+        0.0f, 0.19f, 0.30f,
     };
 
     GLuint vertexbuffer;
@@ -139,7 +139,7 @@ int main( void )
                               );
 
 
-        glDrawElements(GL_TRIANGLES, 6, GL_UNSIGNED_SHORT, NULL);
+        glDrawElements(GL_TRIANGLE_FAN, 6, GL_UNSIGNED_SHORT, NULL);
 
         glDisableVertexAttribArray(1);
         glDisableVertexAttribArray(0);
