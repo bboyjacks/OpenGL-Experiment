@@ -66,9 +66,13 @@ int main( void )
     
     static const GLfloat g_vertex_buffer_data[] = {
         -1.0f, -1.0f, 0.0f,
+        0.0f, 0.0f, 1.0f,
         -1.0f, 1.0f, 0.0f,
+        0.0f, 0.0f, 1.0f,
         1.0f, 1.0f, 0.0f,
+        1.0f, 0.0f, 0.0f,
         1.0f, -1.0f, 0.0f,
+        1.0f, 0.0f, 0.0f,
     };
 
     GLuint vertexbuffer;
@@ -121,24 +125,23 @@ int main( void )
                               3,                  // size
                               GL_FLOAT,           // type
                               GL_FALSE,           // normalized?
-                              0,                  // stride
+                              sizeof(float) * 6,                  // stride
                               (void*)0            // array buffer offset
                               );
-//        glEnableVertexAttribArray(1);
-//        glVertexAttribPointer(
-//                              1,                  // attribute 0. No particular reason for 0, but must match the layout in the shader.
-//                              3,                  // size
-//                              GL_FLOAT,           // type
-//                              GL_FALSE,           // normalized?
-//                              sizeof(float) * 6,                  // stride
-//                              (char*)(sizeof(float) * 3)            // array buffer offset
-//                              );
+        glEnableVertexAttribArray(1);
+        glVertexAttribPointer(
+                              1,                  // attribute 0. No particular reason for 0, but must match the layout in the shader.
+                              3,                  // size
+                              GL_FLOAT,           // type
+                              GL_FALSE,           // normalized?
+                              sizeof(float) * 6,                  // stride
+                              (char*)(sizeof(float) * 3)            // array buffer offset
+                              );
 
-        // Draw the triangle !
-//        glDrawArrays(GL_TRIANGLES, 0, 4); // 3 indices starting at 0 -> 1 triangle
+
         glDrawElements(GL_TRIANGLES, 6, GL_UNSIGNED_SHORT, NULL);
 
-//        glDisableVertexAttribArray(1);
+        glDisableVertexAttribArray(1);
         glDisableVertexAttribArray(0);
         
         // Swap buffers
