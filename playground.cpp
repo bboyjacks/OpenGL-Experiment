@@ -64,49 +64,46 @@ int main( void )
     GLuint programID = LoadShaders( "vertexshader.vertexshader", "fragmentshader.fragmentshader" );
     
     
-//    static const GLfloat g_vertex_buffer_data[] = {
-//        -1.0f, -1.0f, 0.0f,
-//        -1.0f, 1.0f, 0.0f,
-//        1.0f,  1.0f, 0.0f,
-//
-//        -1.0f, -1.0f, 0.0f,
+    static const GLfloat g_vertex_buffer_data[] = {
+        -1.0f, -1.0f, 0.0f,
+        -1.0f, 1.0f, 0.0f,
+        1.0f, 1.0f, 0.0f,
+        1.0f, -1.0f, 0.0f,
+    };
+
+    GLuint vertexbuffer;
+    glGenBuffers(1, &vertexbuffer);
+    glBindBuffer(GL_ARRAY_BUFFER, vertexbuffer);
+    glBufferData(GL_ARRAY_BUFFER, sizeof(g_vertex_buffer_data), g_vertex_buffer_data, GL_STATIC_DRAW);
+    
+//    static const GLfloat verts[] =
+//    {
+//        0.0f, 0.0f, 0.0f,
+//        1.0f, 0.0f, 0.0f,
 //        1.0f, 1.0f, 0.0f,
-//        1.0f,  -1.0f, 0.0f,
+//        0.0f, 1.0f, 0.0f,
+//        -1.0f, 1.0f, 0.0f,
+//        0.0f, 0.0f, 1.0f,
+//        -1.0f, -1.0f, 0.0f,
+//        1.0f, 0.0f, 0.0f,
+//        1.0f, -1.0f, 0.0f,
+//        0.0f, 1.0f, 0.0f,
 //    };
 //
 //    GLuint vertexbuffer;
 //    glGenBuffers(1, &vertexbuffer);
 //    glBindBuffer(GL_ARRAY_BUFFER, vertexbuffer);
-//    glBufferData(GL_ARRAY_BUFFER, sizeof(g_vertex_buffer_data), g_vertex_buffer_data, GL_STATIC_DRAW);
-    
-    static const GLfloat verts[] =
-    {
-        0.0f, 0.0f, 0.0f,
-        1.0f, 0.0f, 0.0f,
-        1.0f, 1.0f, 0.0f,
-        0.0f, 1.0f, 0.0f,
-        -1.0f, 1.0f, 0.0f,
-        0.0f, 0.0f, 1.0f,
-        -1.0f, -1.0f, 0.0f,
-        1.0f, 0.0f, 0.0f,
-        1.0f, -1.0f, 0.0f,
-        0.0f, 1.0f, 0.0f,
-    };
-    
-    GLuint vertexbuffer;
-    glGenBuffers(1, &vertexbuffer);
-    glBindBuffer(GL_ARRAY_BUFFER, vertexbuffer);
-    glBufferData(GL_ARRAY_BUFFER, sizeof(verts), verts, GL_STATIC_DRAW);
+//    glBufferData(GL_ARRAY_BUFFER, sizeof(verts), verts, GL_STATIC_DRAW);
     
     static const GLushort indices[] =
     {
-        0, 1, 2, 0, 3, 4
+        0, 1, 2, 0, 2, 3
     };
     
     GLuint indexbuffer;
     glGenBuffers(1, &indexbuffer);
-    glBindBuffer(GL_ARRAY_BUFFER, indexbuffer);
-    glBufferData(GL_ARRAY_BUFFER, sizeof(indices), indices, GL_STATIC_DRAW);
+    glBindBuffer(GL_ELEMENT_ARRAY_BUFFER, indexbuffer);
+    glBufferData(GL_ELEMENT_ARRAY_BUFFER, sizeof(indices), indices, GL_STATIC_DRAW);
     
     do{
         
@@ -124,24 +121,24 @@ int main( void )
                               3,                  // size
                               GL_FLOAT,           // type
                               GL_FALSE,           // normalized?
-                              sizeof(float) * 6,                  // stride
+                              0,                  // stride
                               (void*)0            // array buffer offset
                               );
-        glEnableVertexAttribArray(1);
-        glVertexAttribPointer(
-                              1,                  // attribute 0. No particular reason for 0, but must match the layout in the shader.
-                              3,                  // size
-                              GL_FLOAT,           // type
-                              GL_FALSE,           // normalized?
-                              sizeof(float) * 6,                  // stride
-                              (char*)(sizeof(float) * 3)            // array buffer offset
-                              );
+//        glEnableVertexAttribArray(1);
+//        glVertexAttribPointer(
+//                              1,                  // attribute 0. No particular reason for 0, but must match the layout in the shader.
+//                              3,                  // size
+//                              GL_FLOAT,           // type
+//                              GL_FALSE,           // normalized?
+//                              sizeof(float) * 6,                  // stride
+//                              (char*)(sizeof(float) * 3)            // array buffer offset
+//                              );
 
         // Draw the triangle !
-        glDrawArrays(GL_TRIANGLES, 0, 6); // 3 indices starting at 0 -> 1 triangle
-//        glDrawElements(GL_TRIANGLES, 6, GL_UNSIGNED_SHORT, NULL);
+//        glDrawArrays(GL_TRIANGLES, 0, 4); // 3 indices starting at 0 -> 1 triangle
+        glDrawElements(GL_TRIANGLES, 6, GL_UNSIGNED_SHORT, NULL);
 
-        glDisableVertexAttribArray(1);
+//        glDisableVertexAttribArray(1);
         glDisableVertexAttribArray(0);
         
         // Swap buffers
